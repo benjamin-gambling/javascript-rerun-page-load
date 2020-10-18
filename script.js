@@ -108,16 +108,16 @@ orderedShow();
 // loadImages.addEventListener('click', orderedShow)
 
 // ITIN SECTIONS
-
-const itinSections = [...document.querySelectorAll(`[class^="itin-section"]`)];
+const itinSections = [...document.querySelectorAll('[class^="itin-section"]')];
 itinSections.forEach((section) => (section.style.transition = "all 2s ease"));
 
 // NEXT/PREVIOUS DAY BUTTONS
+let itinNum = "";
+// let itinNum = 0;
 
 const next = document.getElementById("next-day");
 const previous = document.getElementById("previous-day");
 const buttons = [next, previous];
-let itinNum = 0;
 
 const showDisplay = (boolean) => {
   if (boolean) {
@@ -131,33 +131,44 @@ const showDisplay = (boolean) => {
   }
 };
 
-buttons.forEach((button) => {
-  button.addEventListener("click", () => {
-    showDisplay(false);
-    button.id === "next-day"
-      ? itinNum === itinSections.length - 1
+const buttonDisplay = () => {
+  itinNum === ""
+    ? buttons.forEach((but) => (but.style.opacity = 0))
+    : itinNum === 0
+    ? (previous.style.opacity = 0)
+    : itinNum === itinSections.length - 1
+    ? (next.style.opacity = 0)
+    : buttons.forEach((but) => (but.style.opacity = 1));
+};
+
+const toggleDay = () => {
+  console.log(itinNum);
+  buttonDisplay();
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      showDisplay(false);
+      button.id === "next-day"
+        ? itinNum === itinSections.length - 1
+          ? null
+          : itinNum++
+        : itinNum === 0
         ? null
-        : itinNum++
-      : itinNum === 0
-      ? null
-      : itinNum--;
-    showDisplay(true);
+        : itinNum--;
+      showDisplay(true);
+      buttonDisplay();
+    });
   });
-});
+};
 
-// CLICK "SELECT EXPERIENCE" BUTTON
-
-const selectExperienceButton = document.getElementById("select-experience");
-
-selectExperienceButton.addEventListener("click", () => {
+// OBSERVER FUNCTION
+const observeItin = () => {
+  let delayExecution = false;
   const config = { attributes: true };
   const callback = (mutationsList, observer) => {
     for (const mutation of mutationsList) {
-      if (
-        mutation.target.style.display !== "" ||
-        mutation.target.style.display !== "none"
-      ) {
-        console.log(mutation.target);
+      if (mutation.target.style.opacity && delayExecution === false) {
+        delayExecution = true;
+        setTimeout(() => (delayExecution = false), 1500);
         orderedShow();
       }
     }
@@ -167,4 +178,16 @@ selectExperienceButton.addEventListener("click", () => {
   itinSections.forEach((node) => {
     observer.observe(node, config);
   });
+};
+
+// CLICK "SELECT EXPERIENCE" BUTTON
+const selectExperienceButton = document.getElementById("select-experience");
+
+selectExperienceButton.addEventListener("click", () => {
+  observeItin();
+  itinNum = 0;
+  buttons.forEach((but) => (but.style.opacity = 1));
+  toggleDay();
 });
+
+buttonDisplay();
