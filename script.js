@@ -1,7 +1,9 @@
 // VIDEO PLAYER
-const video = document.getElementById("video-player").parentElement;
-// video.style.maxWidth = "1200px";
-video.style.width = "100%";
+// const video = document.getElementById("video-player").parentElement;
+// // video.style.maxWidth = "1200px";
+// console.log(video);
+// video.style.width = "100%";
+// video.style.height = "55%";
 // video.style.height = "55vw";
 
 // const cld = cloudinary.Cloudinary.new({ cloud_name: "dtgbbrxs0" });
