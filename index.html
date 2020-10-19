@@ -60,13 +60,12 @@
 
     <!-- DEFER SCRIPT TO LOAD AFTER -->
     <script
-      defer
       src="https://product-gallery.cloudinary.com/all.js"
       type="text/javascript"
     ></script>
 
     <!-- VIDEO PLAYER LIGHT + MIN, IF WANT TO UPGRADE TO STANDARD REMOVE .light AND/OR .min -->
-    <link
+    <!-- <link
       href="https://unpkg.com/cloudinary-video-player@1.4.3/dist/cld-video-player.light.min.css"
       rel="stylesheet"
     />
@@ -77,7 +76,7 @@
     <script
       src="https://unpkg.com/cloudinary-video-player@1.4.3/dist/cld-video-player.light.min.js"
       type="text/javascript"
-    ></script>
+    ></script> -->
   </head>
   <body class="body">
     <div
@@ -106,12 +105,13 @@
     <div class="parent">
       <div class="trip-section">
         <div id="topscroll" class="cont-video w-container">
-          <video
+          <div id="video-player"></div>
+          <!-- <video
             id="video-player"
             muted
             class="cld-video-player cld-fluid"
             style="outline: none"
-          ></video>
+          ></video> -->
         </div>
         <div class="trip-cont-intro w-container">
           <div class="trip-intro-head">

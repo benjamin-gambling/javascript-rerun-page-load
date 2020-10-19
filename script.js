@@ -2,40 +2,50 @@
 const video = document.getElementById("video-player").parentElement;
 // video.style.maxWidth = "1200px";
 video.style.width = "100%";
+// video.style.height = "55vw";
 
-const cld = cloudinary.Cloudinary.new({ cloud_name: "dtgbbrxs0" });
-const player = cld.videoPlayer("video-player", {
-  loop: true,
-  autoplayMode: "on-scroll",
+// const cld = cloudinary.Cloudinary.new({ cloud_name: "dtgbbrxs0" });
+// const player = cld.videoPlayer("video-player", {
+//   loop: true,
+//   autoplayMode: "on-scroll",
+// });
+
+// const getUrlByScreenSize = () => {
+//   // MOBILE
+//   if (window.screen.width < 475) {
+//     return "https://res.cloudinary.com/dtgbbrxs0/video/upload/v1602938033/chael.mp4";
+
+//     // DESKTOP
+//   } else if (window.screen.width > 980) {
+//     return "https://res.cloudinary.com/dtgbbrxs0/video/upload/v1602938033/finalvid.mp4";
+
+//     // TABLET
+//   } else {
+//     return "TABLET LINK";
+//   }
+// };
+
+// const getPublicId = (link) => {
+//   let a = link.lastIndexOf("/");
+//   let z = link.lastIndexOf(".");
+//   return link.substring(a + 1, z);
+// };
+
+// const url = getUrlByScreenSize();
+// const publicID = getPublicId(url);
+
+// player.source(publicID);
+const myGallery = cloudinary.galleryWidget({
+  container: "#video-player",
+  cloudName: "demo",
+  carouselStyle: "none",
+  aspectRatio: "16:9",
+  mediaAssets: [
+    { tag: "electric_car_product_gallery_demo", mediaType: "video" },
+  ],
 });
 
-const getUrlByScreenSize = () => {
-  // MOBILE
-  if (window.screen.width < 475) {
-    return "https://res.cloudinary.com/dtgbbrxs0/video/upload/v1602938033/chael.mp4";
-
-    // DESKTOP
-  } else if (window.screen.width > 980) {
-    return "https://res.cloudinary.com/dtgbbrxs0/video/upload/v1602938033/finalvid.mp4";
-
-    // TABLET
-  } else {
-    return "TABLET LINK";
-  }
-};
-
-const getPublicId = (link) => {
-  let a = link.lastIndexOf("/");
-  let z = link.lastIndexOf(".");
-  return link.substring(a + 1, z);
-};
-
-const url = getUrlByScreenSize();
-const publicID = getPublicId(url);
-
-player.source(publicID);
-
-console.log(window.screen.width, document.documentElement.clientWidth);
+myGallery.render();
 
 async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
