@@ -1,4 +1,8 @@
 // VIDEO PLAYER
+const video = document.getElementById("video-player").parentElement;
+// video.style.maxWidth = "1200px";
+video.style.width = "100%";
+
 const cld = cloudinary.Cloudinary.new({ cloud_name: "dtgbbrxs0" });
 const player = cld.videoPlayer("video-player", {
   loop: true,
@@ -166,10 +170,16 @@ const observeItin = () => {
   const config = { attributes: true };
   const callback = (mutationsList, observer) => {
     for (const mutation of mutationsList) {
-      if (mutation.target.style.opacity && delayExecution === false) {
-        delayExecution = true;
-        setTimeout(() => (delayExecution = false), 1500);
-        orderedShow();
+      if (!mutation.target.getAttribute("data-loaded")) {
+        if (
+          mutation.target.style.display === "block" &&
+          delayExecution === false
+        ) {
+          delayExecution = true;
+          setTimeout(() => (delayExecution = false), 1500);
+          orderedShow();
+          mutation.target.setAttribute("data-loaded", true);
+        }
       }
     }
   };
