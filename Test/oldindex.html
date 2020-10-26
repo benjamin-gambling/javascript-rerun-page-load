@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created in Webflow. http://www.webflow.com -->
-<!-- Last Published: Wed Oct 21 2020 18:48:32 GMT+0000 (Coordinated Universal Time) -->
+<!-- Last Published: Sat Oct 17 2020 12:39:32 GMT+0000 (Coordinated Universal Time) -->
 <html
   data-wf-domain="celine-76c1f9-6f513b5b480-49bf5e166e754.webflow.io"
   data-wf-page="5f858d5fb5fb66e2429a206a"
@@ -9,11 +9,11 @@
 >
   <head>
     <meta charset="utf-8" />
-    <title>Ben Celine</title>
+    <title>Copy of Celine</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Webflow" name="generator" />
     <link
-      href="https://uploads-ssl.webflow.com/5f858d5fb5fb666de79a2069/css/celine-76c1f9-6f513b5b480-49bf5e166e754.webflow.f18c2c361.css"
+      href="https://uploads-ssl.webflow.com/5f858d5fb5fb666de79a2069/css/celine-76c1f9-6f513b5b480-49bf5e166e754.webflow.b977ec4a5.css"
       rel="stylesheet"
       type="text/css"
     />
@@ -54,13 +54,29 @@
       rel="apple-touch-icon"
     />
     <script
-      src="https://product-gallery.cloudinary.com/all.js"
+      src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"
       type="text/javascript"
     ></script>
+
+    <!-- DEFER SCRIPT TO LOAD AFTER -->
     <script
       src="https://product-gallery.cloudinary.com/all.js"
       type="text/javascript"
     ></script>
+
+    <!-- VIDEO PLAYER LIGHT + MIN, IF WANT TO UPGRADE TO STANDARD REMOVE .light AND/OR .min -->
+    <!-- <link
+      href="https://unpkg.com/cloudinary-video-player@1.4.3/dist/cld-video-player.light.min.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://unpkg.com/cloudinary-core@2.10.3/cloudinary-core-shrinkwrap.min.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="https://unpkg.com/cloudinary-video-player@1.4.3/dist/cld-video-player.light.min.js"
+      type="text/javascript"
+    ></script> -->
   </head>
   <body class="body">
     <div
@@ -88,10 +104,18 @@
     </div>
     <div class="parent">
       <div class="trip-section">
-        <div class="cont-video w-container">
-          <div class="cont-video-div" style="max-width: 100%; width: 100vw">
-            <div id="video-player" class="video-player"></div>
-          </div>
+        <div
+          id="topscroll"
+          class="cont-video w-container"
+          style="width: 100%; min-height: 40vw"
+        >
+          <div id="video-player"></div>
+          <!-- <video
+            id="video-player"
+            muted
+            class="cld-video-player cld-fluid"
+            style="outline: none"
+          ></video> -->
         </div>
         <div class="trip-cont-intro w-container">
           <div class="trip-intro-head">
@@ -140,7 +164,7 @@
         </div>
         <div class="trip-cont-image-left w-container">
           <div class="trip-photo-div">
-            <a href="#" class="anchor-link w-inline-block">
+            <a href="#topscroll" class="anchor-link w-inline-block">
               <img
                 src="https://uploads-ssl.webflow.com/5f858d5fb5fb666de79a2069/5f8869d07ad389c7ae3b748a_collage-newer2.jpg"
                 alt=""
@@ -156,8 +180,8 @@
               <br />Nemo enim ipsam voluptatem quia voluptas.
             </p>
             <a
-              id="select-experience1"
-              href="#"
+              id="select-experience"
+              href="#topscroll"
               data-w-id="48bb5095-e6b5-ac1b-7608-c334ab10bdcd"
               class="trip-main_btn w-button"
               >Select experiences</a
@@ -217,6 +241,15 @@
           </div>
         </div>
       </div>
+      <div class="hotel-section">
+        <div class="hotel-cont w-container">
+          <img
+            src="https://uploads-ssl.webflow.com/5f858d5fb5fb666de79a2069/5f858d5fb5fb6680b09a20da_0Z8A1935-Editar-1024x682.jpg"
+            loading="lazy"
+            alt=""
+          />
+        </div>
+      </div>
       <div class="loading-section">
         <div class="loading-cont w-container">
           <div
@@ -237,7 +270,6 @@
         <div class="explainer-cont w-container">
           <h1 class="explainer-head_txt">This is how this thing works</h1>
           <a
-            id="select-experience2"
             data-w-id="03755f89-4f21-5c35-1122-bd6053191e7a"
             href="#"
             class="button w-button"
@@ -629,15 +661,6 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="hotel-section">
-        <div class="hotel-cont w-container">
-          <img
-            src="https://uploads-ssl.webflow.com/5f858d5fb5fb666de79a2069/5f858d5fb5fb6680b09a20da_0Z8A1935-Editar-1024x682.jpg"
-            loading="lazy"
-            alt=""
-          />
         </div>
       </div>
     </div>

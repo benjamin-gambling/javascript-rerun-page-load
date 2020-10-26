@@ -1,54 +1,3 @@
-// VIDEO PLAYER
-// const video = document.getElementById("video-player").parentElement;
-// // video.style.maxWidth = "1200px";
-// console.log(video);
-// video.style.width = "100%";
-// video.style.height = "55%";
-// video.style.height = "55vw";
-
-// const cld = cloudinary.Cloudinary.new({ cloud_name: "dtgbbrxs0" });
-// const player = cld.videoPlayer("video-player", {
-//   loop: true,
-//   autoplayMode: "on-scroll",
-// });
-
-// const getUrlByScreenSize = () => {
-//   // MOBILE
-//   if (window.screen.width < 475) {
-//     return "https://res.cloudinary.com/dtgbbrxs0/video/upload/v1602938033/chael.mp4";
-
-//     // DESKTOP
-//   } else if (window.screen.width > 980) {
-//     return "https://res.cloudinary.com/dtgbbrxs0/video/upload/v1602938033/finalvid.mp4";
-
-//     // TABLET
-//   } else {
-//     return "TABLET LINK";
-//   }
-// };
-
-// const getPublicId = (link) => {
-//   let a = link.lastIndexOf("/");
-//   let z = link.lastIndexOf(".");
-//   return link.substring(a + 1, z);
-// };
-
-// const url = getUrlByScreenSize();
-// const publicID = getPublicId(url);
-
-// player.source(publicID);
-const myGallery = cloudinary.galleryWidget({
-  container: "#video-player",
-  cloudName: "demo",
-  carouselStyle: "none",
-  aspectRatio: "16:9",
-  mediaAssets: [
-    { tag: "electric_car_product_gallery_demo", mediaType: "video" },
-  ],
-});
-
-myGallery.render();
-
 async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -105,31 +54,28 @@ async function orderedShow() {
   let containers = document.querySelectorAll("[data-gallery='true']");
   var galleries = [];
   for (galleryContainer of containers) {
-    try {
-      galleries.push({
-        gallery: await createGallery(galleryContainer),
-        container: galleryContainer,
-      });
-    } catch (e) {}
+    if (!galleryContainer.getAttribute("data-loaded")) {
+      try {
+        galleries.push({
+          gallery: await createGallery(galleryContainer),
+          container: galleryContainer,
+        });
+      } catch (e) {}
+    }
   }
   for (gallery of galleries) {
     await updateGallery(gallery.gallery, gallery.container);
+    gallery.container.setAttribute("data-loaded", true);
   }
 }
 
-orderedShow();
-
-// THESE ARE NOT IN USE BUT LEFT THEM INCASE YOU STILL WANTED THEM
-// const loadImages = document.getElementById("load-images")
-// loadImages.addEventListener('click', orderedShow)
-
 // ITIN SECTIONS
 const itinSections = [...document.querySelectorAll('[class^="itin-section"]')];
-itinSections.forEach((section) => (section.style.transition = "all 2s ease"));
+
+itinSections.forEach((section) => (section.style.transition = "all 1s ease"));
 
 // NEXT/PREVIOUS DAY BUTTONS
-let itinNum = "";
-// let itinNum = 0;
+let itinNum = 0;
 
 const next = document.getElementById("next-day");
 const previous = document.getElementById("previous-day");
@@ -137,20 +83,18 @@ const buttons = [next, previous];
 
 const showDisplay = (boolean) => {
   if (boolean) {
-    itinSections[itinNum].style.display = "block";
+    itinSections[itinNum].style.zIndex = 1;
     setTimeout(() => {
       itinSections[itinNum].style.opacity = 1;
-    }, 1500);
+    }, 1000);
   } else {
-    itinSections[itinNum].style.display = "none";
     itinSections[itinNum].style.opacity = 0;
+    itinSections[itinNum].style.zIndex = -1;
   }
 };
 
 const buttonDisplay = () => {
-  itinNum === ""
-    ? buttons.forEach((but) => (but.style.opacity = 0))
-    : itinNum === 0
+  itinNum === 0
     ? (previous.style.opacity = 0)
     : itinNum === itinSections.length - 1
     ? (next.style.opacity = 0)
@@ -158,7 +102,6 @@ const buttonDisplay = () => {
 };
 
 const toggleDay = () => {
-  console.log(itinNum);
   buttonDisplay();
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -172,44 +115,59 @@ const toggleDay = () => {
         : itinNum--;
       showDisplay(true);
       buttonDisplay();
+      if (button.id === "next-day" && nextItin < itinSections.length) {
+        nextItinLoad();
+      }
     });
   });
 };
 
-// OBSERVER FUNCTION
-const observeItin = () => {
-  let delayExecution = false;
-  const config = { attributes: true };
-  const callback = (mutationsList, observer) => {
-    for (const mutation of mutationsList) {
-      if (!mutation.target.getAttribute("data-loaded")) {
-        if (
-          mutation.target.style.display === "block" &&
-          delayExecution === false
-        ) {
-          delayExecution = true;
-          setTimeout(() => (delayExecution = false), 1500);
-          orderedShow();
-          mutation.target.setAttribute("data-loaded", true);
-        }
-      }
-    }
-  };
-  const observer = new MutationObserver(callback);
+// // OBSERVER FUNCTION
+// const observeItin = () => {
+//   let delayExecution = false;
+//   const config = {
+//     attributes: true,
+//   };
+//   const callback = (mutationsList, observer) => {
+//     for (const mutation of mutationsList) {
+//       if (!mutation.target.getAttribute("data-loaded")) {
+//         if (
+//           mutation.target.style.display === "block" &&
+//           delayExecution === false
+//         ) {
+//           delayExecution = true;
+//           setTimeout(() => (delayExecution = false), 1500);
+//           orderedShow();
+//           mutation.target.setAttribute("data-loaded", true);
+//         }
+//       }
+//     }
+//   };
+//   const observer = new MutationObserver(callback);
 
-  itinSections.forEach((node) => {
-    observer.observe(node, config);
-  });
+//   itinSections.forEach((node) => {
+//     observer.observe(node, config);
+//   });
+// };
+
+const selectExperienceButtons = [
+  ...document.querySelectorAll('[id^="select-experience"]'),
+];
+
+let nextItin = 0;
+
+const nextItinLoad = () => {
+  itinSections[nextItin].style.zIndex = -1;
+  itinSections[nextItin].style.display = "block";
+  orderedShow();
+  nextItin++;
 };
 
-// CLICK "SELECT EXPERIENCE" BUTTON
-const selectExperienceButton = document.getElementById("select-experience");
+selectExperienceButtons.forEach((button) =>
+  button.addEventListener("click", () => {
+    nextItinLoad();
+  })
+);
 
-selectExperienceButton.addEventListener("click", () => {
-  observeItin();
-  itinNum = 0;
-  buttons.forEach((but) => (but.style.opacity = 1));
-  toggleDay();
-});
-
-buttonDisplay();
+toggleDay();
+// observeItin();

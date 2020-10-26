@@ -1,0 +1,82 @@
+// Add button navigation between itin-sections 
+
+1. Add id="previous/next-day" to links at top of the page 
+
+    <nav role="navigation" class="w-nav-menu">
+        <a id="previous-day" href="#" class="nav-link w-nav-link">Previous</a>
+        <a id="next-day" href="#" class="nav-link w-nav-link">Next</a>
+    </nav>
+
+2. In between //ITIN-SECTION and //OBSERVER FUNCTION place this script that for the next/previous day button functionality 
+
+         // ITIN SECTIONS
+          .....
+        
+
+          // NEXT/PREVIOUS DAY BUTTONS
+          let itinNum = 0;
+
+          const next = document.getElementById("next-day");
+          const previous = document.getElementById("previous-day");
+          const buttons = [next, previous];
+
+          const showDisplay = (boolean) => {
+            if (boolean) {
+              itinSections[itinNum].style.display = "block";
+              setTimeout(() => {
+                itinSections[itinNum].style.opacity = 1;
+              }, 2000);
+            } else {
+              itinSections[itinNum].style.display = "none";
+              itinSections[itinNum].style.opacity = 0;
+            }
+          };
+
+          const buttonDisplay = () => {
+            itinNum === 0
+              ? (previous.style.opacity = 0)
+              : itinNum === itinSections.length - 1
+              ? (next.style.opacity = 0)
+              : buttons.forEach((but) => (but.style.opacity = 1));
+          };
+
+          const toggleDay = () => {
+            buttonDisplay();
+            buttons.forEach((button) => {
+              button.addEventListener("click", () => {
+                showDisplay(false);
+                button.id === "next-day"
+                  ? itinNum === itinSections.length - 1
+                    ? null
+                    : itinNum++
+                  : itinNum === 0
+                  ? null
+                  : itinNum--;
+                showDisplay(true);
+                buttonDisplay();
+              });
+            });
+          };
+
+
+          // OBSERVER FUNCTION
+          .......
+
+          3. Add this line of cod to //ITIN SECTION TO CREATE SMOOTH TRANSITION
+
+          // ITIN SECTIONS
+          const itinSections = [...document.querySelectorAll('[class^="itin-section"]')];
+          
+          //ADD THIS LINE
+          itinSections.forEach((section) => (section.style.transition = "all 2s ease"));
+
+          // NEXT/PREVIOUS DAY BUTTONS
+          .....
+
+          4. Add toggleday function to event listener to activate the hide button feature when on certain pages
+            //THIS IS LOCATED AT THE BOTTOM OF THE SCRIPT
+
+          selectExperienceButton.addEventListener("click", () => {
+            observeItin();
+            toggleDay(); //ADD THIS 
+          });
